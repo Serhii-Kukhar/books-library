@@ -1,0 +1,9 @@
+(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))t(e);new MutationObserver(e=>{for(const n of e)if(n.type==="childList")for(const i of n.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&t(i)}).observe(document,{childList:!0,subtree:!0});function r(e){const n={};return e.integrity&&(n.integrity=e.integrity),e.referrerPolicy&&(n.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?n.credentials="include":e.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function t(e){if(e.ep)return;e.ep=!0;const n=r(e);fetch(e.href,n)}})();const l="AIzaSyC-JY0xvcs1AAv7UMgr_J7gs0-baZ74Isw",a="https://www.googleapis.com/books/v1/volumes";async function c(s){try{const r=await(await fetch(`${a}?q=${encodeURIComponent(s)}&langRestrict=uk&key=${l}`)).json();return r.items?r.items.map(t=>({title:t.volumeInfo.title,authors:t.volumeInfo.authors||["Невідомий автор"],description:t.volumeInfo.description||"Опис відсутній",link:t.volumeInfo.infoLink,image:t.volumeInfo.imageLinks?t.volumeInfo.imageLinks.thumbnail:null})):[]}catch(o){return console.error("Помилка при запиті до Google Books API:",o),[]}}c("Шевченко").then(s=>console.log(s));function u(s){const o=document.getElementById("books-container");if(o.innerHTML="",s.length===0){o.innerHTML="<p>Нічого не знайдено</p>";return}s.forEach(r=>{const t=document.createElement("div");t.classList.add("book");const e=r.image?r.image:"path/to/default/image.jpg";t.innerHTML=`
+            <img class="book-img" src="${e}" alt="Обкладинка книги"  />
+
+            <h3>${r.title}</h3>
+            <p><strong>Автор:</strong> ${r.authors.join(", ")}</p>
+            
+            <a href="${r.link}" target="_blank">Детальніше</a>
+        `,o.appendChild(t)})}c("Роксолана").then(s=>{u(s)});
+//# sourceMappingURL=index.js.map
